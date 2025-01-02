@@ -1,0 +1,2 @@
+[tasks.develop]
+script = "docker compose -f .dockerdev/compose.yml up"
