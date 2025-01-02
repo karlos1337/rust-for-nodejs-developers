@@ -1,0 +1,22 @@
+name: rust-for-nodejs-developers
+
+services:
+  backend-app:
+    command: ["cargo", "watch", "-x", "run"]
+    restart: unless-stopped
+    tty: true
+    environment:
+      ROCKET_ADDRESS: 0.0.0.0
+    build:
+      context: ../
+      dockerfile: ./.dockerdev/Dockerfile
+    volumes:
+      - ../.:/app
+      - backend-target:/app/target
+      - backend-cargo:/usr/local/cargo
+    ports:
+      - 8000:8000
+
+volumes:
+  backend-target:
+  backend-cargo:
