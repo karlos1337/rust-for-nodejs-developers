@@ -6,6 +6,7 @@ services:
     restart: unless-stopped
     tty: true
     environment:
+      DATABASE_URL: postgresql://root:password@db:5432/rocket
       ROCKET_ADDRESS: 0.0.0.0
     build:
       context: ../
@@ -17,6 +18,22 @@ services:
     ports:
       - 8000:8000
 
+  db:
+    image: postgres:latest
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: rocket
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+    ports:
+      - 5432:5432
+    volumes:
+      - dbvolume:/var/lib/postgresql/data
+    command: ["postgres", "-c", "log_statement=all"]
+
 volumes:
   backend-target:
   backend-cargo:
+  dbvolume:
