@@ -5,3 +5,16 @@ edition = "2021"
 
 [dependencies]
 rocket = { version = "0.5.1", features = ["json"] }
+
+[dependencies.sqlx]
+version = "0.8.3"
+features = [
+  "runtime-tokio",
+  "tls-native-tls",
+  "postgres",
+  "macros",
+  "migrate",
+  "uuid",
+  "time",
+  "json",
+]
