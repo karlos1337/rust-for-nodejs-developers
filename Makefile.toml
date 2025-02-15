@@ -1,2 +1,12 @@
+[env]
+DOCKER_SCRIPT = "docker compose -f .dockerdev/compose.yml"
+DOCKER_SCRIPT_RUN = "${DOCKER_SCRIPT} run --remove-orphans --rm backend-app"
+
 [tasks.develop]
-script = "docker compose -f .dockerdev/compose.yml up"
+script = "${DOCKER_SCRIPT} up"
+
+[tasks.sqlx]
+script = "${DOCKER_SCRIPT_RUN} sqlx ${@}"
+
+[tasks.setup]
+script = ["cargo make sqlx database create", "cargo make sqlx migrate run"]
